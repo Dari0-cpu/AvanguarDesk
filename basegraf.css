@@ -1,93 +1,93 @@
 /* ===== TEMI ===== */
 :root,
 html[data-theme="light"] {
-    --bg-color: #f4f7f6;
-    --text-color: #2c3e50;
-    --primary: #0eb626;
-    --primary-dark: #0b9420;
-    --secondary: #2ecc71;
+    --bg-color: #f8fafc;
+    --text-color: #1e293b;
+    --primary: #10b981; /* Smeraldo moderno */
+    --primary-dark: #059669;
+    --secondary: #3b82f6;
     --card-bg: #ffffff;
-    --muted: #7f8c8d;
-    --muted-soft: #bdc3c7;
-    --border: #e0e6ed;
-    --input-bg: #f9fbfb;
-    --input-border: #dfe6e9;
-    --shadow: rgba(0, 0, 0, 0.08);
+    --muted: #64748b;
+    --muted-soft: #cbd5e1;
+    --border: #e2e8f0;
+    --input-bg: #f1f5f9;
+    --input-border: #cbd5e1;
+    --shadow: rgba(15, 23, 42, 0.06);
     --header-text: #ffffff;
-    --glow: rgba(14, 182, 38, 0.5);
-    --glow-soft: rgba(14, 182, 38, 0.2);
+    --glow: rgba(16, 185, 129, 0.35);
+    --glow-soft: rgba(16, 185, 129, 0.15);
 }
 
 html[data-theme="dark"] {
-    --bg-color: #0f1419;
-    --text-color: #e6edf3;
-    --primary: #58a6ff;
-    --primary-dark: #3d7fd6;
-    --secondary: #3fb950;
-    --card-bg: #1a212b;
-    --muted: #8b949e;
-    --muted-soft: #6e7681;
-    --border: #2d3440;
-    --input-bg: #0f1419;
-    --input-border: #2d3440;
-    --shadow: rgba(0, 0, 0, 0.5);
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --primary: #6366f1; /* Indaco brillante */
+    --primary-dark: #4f46e5;
+    --secondary: #14b8a6;
+    --card-bg: #1e293b;
+    --muted: #94a3b8;
+    --muted-soft: #475569;
+    --border: #334155;
+    --input-bg: #0f172a;
+    --input-border: #334155;
+    --shadow: rgba(0, 0, 0, 0.4);
     --header-text: #ffffff;
-    --glow: rgba(88, 166, 255, 0.45);
-    --glow-soft: rgba(88, 166, 255, 0.15);
+    --glow: rgba(99, 102, 241, 0.4);
+    --glow-soft: rgba(99, 102, 241, 0.15);
 }
 
 html[data-theme="ocean"] {
-    --bg-color: #e6f4f8;
-    --text-color: #023047;
-    --primary: #0077b6;
-    --primary-dark: #005c8e;
-    --secondary: #00b4d8;
+    --bg-color: #f0f9ff;
+    --text-color: #0c4a6e;
+    --primary: #0ea5e9; /* Azzurro cielo intenso */
+    --primary-dark: #0284c7;
+    --secondary: #06b6d4;
     --card-bg: #ffffff;
-    --muted: #4a7c8c;
-    --muted-soft: #a3c4d0;
-    --border: #cfe6ee;
-    --input-bg: #f2fafc;
-    --input-border: #cfe6ee;
-    --shadow: rgba(2, 48, 71, 0.1);
+    --muted: #0369a1;
+    --muted-soft: #bae6fd;
+    --border: #e0f2fe;
+    --input-bg: #f8fafc;
+    --input-border: #bae6fd;
+    --shadow: rgba(12, 74, 110, 0.06);
     --header-text: #ffffff;
-    --glow: rgba(0, 180, 216, 0.5);
-    --glow-soft: rgba(0, 180, 216, 0.2);
+    --glow: rgba(14, 165, 233, 0.35);
+    --glow-soft: rgba(14, 165, 233, 0.15);
 }
 
 html[data-theme="forest"] {
-    --bg-color: #f1f7ed;
-    --text-color: #1b2e1f;
-    --primary: #05440e;
-    --primary-dark: #032c09;
-    --secondary: #7cb518;
+    --bg-color: #f4f5f0;
+    --text-color: #2f3e46;
+    --primary: #52796f; /* Salvia scuro elegante */
+    --primary-dark: #354f52;
+    --secondary: #84a98c;
     --card-bg: #ffffff;
-    --muted: #5c7a5f;
-    --muted-soft: #a9bfab;
-    --border: #d9e6d4;
-    --input-bg: #f7fbf5;
-    --input-border: #d9e6d4;
-    --shadow: rgba(27, 46, 31, 0.1);
+    --muted: #5c6b73;
+    --muted-soft: #cad2c5;
+    --border: #e3e6e1;
+    --input-bg: #fafafa;
+    --input-border: #cad2c5;
+    --shadow: rgba(47, 62, 70, 0.06);
     --header-text: #ffffff;
-    --glow: rgba(124, 181, 24, 0.5);
-    --glow-soft: rgba(124, 181, 24, 0.2);
+    --glow: rgba(82, 121, 111, 0.35);
+    --glow-soft: rgba(82, 121, 111, 0.15);
 }
 
 html[data-theme="sunset"] {
-    --bg-color: #fff5ec;
-    --text-color: #3d1f14;
-    --primary: #e85d04;
-    --primary-dark: #b84a03;
-    --secondary: #ff006e;
+    --bg-color: #fff1f2;
+    --text-color: #4c0519;
+    --primary: #f43f5e; /* Rosa corallo vibrante */
+    --primary-dark: #e11d48;
+    --secondary: #fb923c;
     --card-bg: #ffffff;
-    --muted: #9c6b52;
-    --muted-soft: #d9b8a5;
-    --border: #f6e0d0;
-    --input-bg: #fffaf6;
-    --input-border: #f6e0d0;
-    --shadow: rgba(61, 31, 20, 0.1);
+    --muted: #9f1239;
+    --muted-soft: #fecdd3;
+    --border: #ffe4e6;
+    --input-bg: #fff;
+    --input-border: #fecdd3;
+    --shadow: rgba(76, 5, 25, 0.06);
     --header-text: #ffffff;
-    --glow: rgba(255, 0, 110, 0.5);
-    --glow-soft: rgba(255, 0, 110, 0.2);
+    --glow: rgba(244, 63, 94, 0.35);
+    --glow-soft: rgba(244, 63, 94, 0.15);
 }
 
 /* ===== BASE ===== */

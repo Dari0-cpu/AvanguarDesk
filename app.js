@@ -167,11 +167,11 @@ document.getElementById('btnSearchClear').onclick = () => {
 
 // ===== TAVOLOZZA TEMI =====
 const THEMES = [
-    { id: 'light',  name: 'Chiaro',   colors: ['#f4f7f6', '#0eb626', '#2ecc71'] },
-    { id: 'dark',   name: 'Scuro',    colors: ['#0f1419', '#58a6ff', '#3fb950'] },
-    { id: 'ocean',  name: 'Oceano',   colors: ['#e6f4f8', '#0077b6', '#00b4d8'] },
-    { id: 'forest', name: 'Foresta',  colors: ['#f1f7ed', '#05440e', '#7cb518'] },
-    { id: 'sunset', name: 'Tramonto', colors: ['#fff5ec', '#e85d04', '#ff006e'] }
+    { id: 'light',  name: 'Chiaro',   colors: ['#f8fafc', '#10b981', '#3b82f6'] },
+    { id: 'dark',   name: 'Scuro',    colors: ['#0f172a', '#6366f1', '#14b8a6'] },
+    { id: 'ocean',  name: 'Oceano',   colors: ['#f0f9ff', '#0ea5e9', '#06b6d4'] },
+    { id: 'forest', name: 'Foresta',  colors: ['#f4f5f0', '#52796f', '#84a98c'] },
+    { id: 'sunset', name: 'Tramonto', colors: ['#fff1f2', '#f43f5e', '#fb923c'] }
 ];
 
 function applyTheme(id) {
