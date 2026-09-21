@@ -192,3 +192,45 @@ h2 { font-size: 1.1rem; color: var(--muted); border-bottom: 2px solid var(--bord
 .theme-swatches { display: flex; gap: 5px; margin-bottom: 8px; }
 .theme-swatches span { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.12); }
 .theme-name { font-size: 0.9rem; font-weight: 600; color: var(--text-color); }
+
+/* ===== BOTTONI ELIMINA ===== */
+.delete-active-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #fecdd3;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+}
+.delete-active-btn:hover { background: #ffe4e6; }
+.delete-active-btn:active { transform: scale(0.95); }
+
+.delete-btn {
+    background: none;
+    border: 1.5px solid #e74c3c;
+    color: #e74c3c;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, background 0.15s, color 0.15s;
+}
+.delete-btn:hover { background: #e74c3c; color: #fff; }
+.delete-btn:active { transform: scale(0.85); }
+
+.done-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}

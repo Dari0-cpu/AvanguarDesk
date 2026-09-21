@@ -11,7 +11,7 @@ const addModal = document.getElementById('addModal');
 const detailModal = document.getElementById('detailModal');
 const supaModal = document.getElementById('supaModal');
 const themeModal = document.getElementById('themeModal');
-
+let editingClientId = null; // Memorizza l'ID se stiamo modificando, null se stiamo aggiungendo
 // Escape per evitare che il testo dell'utente rompa l'HTML delle card
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
@@ -57,7 +57,11 @@ function render() {
                 <h4 class="done-name">${esc(c.nome)} ${esc(c.cognome)}</h4>
                 <span class="done-meta">📍 ${esc(c.location) || 'N/D'} | 📞 ${esc(c.telefono) || 'N/D'}</span>
             </div>
-            <button class="restore-btn" title="Riporta in lavorazione" onclick="restoreClient('${c.id}', event)">↩</button>
+            <div class="done-actions">
+                <button class="restore-btn" title="Riporta in lavorazione" onclick="restoreClient('${c.id}', event)">↩</button>
+                <!-- NUOVO BOTTONE ELIMINA -->
+                <button class="delete-btn" title="Elimina" onclick="deleteClient('${c.id}', event)">🗑️</button>
+            </div>
         `;
         doneList.appendChild(card);
     });
@@ -74,6 +78,15 @@ function render() {
 }
 
 // ===== AZIONI =====
+window.deleteClient = (id, e) => {
+    if (e) e.stopPropagation(); // Evita che si apra il dettaglio se clicchi direttamente il cestino
+    if (confirm('Sei sicuro di voler eliminare definitivamente questo cliente?')) {
+        clients = clients.filter(c => c.id !== id);
+        closeModals(); // Chiude la scheda dettaglio se stavi eliminando da lì
+        render();
+    }
+};
+
 window.completeClient = (id, e) => {
     e.stopPropagation();
     const client = clients.find(c => c.id === id);
@@ -95,23 +108,60 @@ window.openDetail = (c) => {
     document.getElementById('d_telefono').textContent = c.telefono || '-';
     document.getElementById('d_mail').textContent = c.mail || '-';
     document.getElementById('d_descrizione').textContent = c.descrizione || '-';
+
+    // Collega il nuovo cestino all'id del cliente aperto
+    document.getElementById('btnDeleteActive').onclick = () => deleteClient(c.id);
+
     detailModal.classList.add('active');
+
+    // Nuova logica per il bottone Modifica
+    document.getElementById('btnEditClient').onclick = () => {
+        editingClientId = c.id; // Impostiamo la variabile in modalità modifica
+        document.getElementById('formModalTitle').textContent = "Modifica Cliente";
+
+        // Precompila i campi
+        document.getElementById('i_nome').value = c.nome || '';
+        document.getElementById('i_cognome').value = c.cognome || '';
+        document.getElementById('i_location').value = c.location || '';
+        document.getElementById('i_telefono').value = c.telefono || '';
+        document.getElementById('i_mail').value = c.mail || '';
+        document.getElementById('i_descrizione').value = c.descrizione || '';
+
+        // Chiudi il dettaglio e apri il form
+        detailModal.classList.remove('active');
+        addModal.classList.add('active');
+    };
 };
 
-// ===== FORM DI AGGIUNTA =====
 document.getElementById('addForm').onsubmit = (e) => {
     e.preventDefault();
-    clients.push({
-        id: Date.now().toString(),
+
+    const clientData = {
         nome: document.getElementById('i_nome').value,
         cognome: document.getElementById('i_cognome').value,
         location: document.getElementById('i_location').value,
         telefono: document.getElementById('i_telefono').value,
         mail: document.getElementById('i_mail').value,
         descrizione: document.getElementById('i_descrizione').value,
-        status: 'active',
-        dateAdded: Date.now()
-    });
+    };
+
+    if (editingClientId) {
+        // Stiamo modificando un cliente esistente
+        const index = clients.findIndex(c => c.id === editingClientId);
+        if (index !== -1) {
+            // Aggiorna i dati mantenendo id, status e dateAdded inalterati
+            clients[index] = { ...clients[index], ...clientData };
+        }
+    } else {
+        // Nuovo cliente
+        clients.push({
+            id: Date.now().toString(),
+            ...clientData,
+            status: 'active',
+            dateAdded: Date.now()
+        });
+    }
+
     stopDictation();
     hideSuggestions();
     e.target.reset();
@@ -126,7 +176,14 @@ window.closeModals = () => {
     stopDictation();
     hideSuggestions();
 };
-document.getElementById('fab').onclick = () => addModal.classList.add('active');
+
+// E sostituiscila con:
+document.getElementById('fab').onclick = () => {
+    editingClientId = null; // Azzera l'ID (modalità nuovo)
+    document.getElementById('formModalTitle').textContent = "Nuovo Cliente";
+    document.getElementById('addForm').reset(); // Pulisce il form
+    addModal.classList.add('active');
+};
 document.getElementById('btnSync').onclick = () => supaModal.classList.add('active');
 document.getElementById('btnTheme').onclick = () => { renderThemes(); themeModal.classList.add('active'); };
 
@@ -231,6 +288,7 @@ async function searchPlaces(q) {
 
     const url = 'https://nominatim.openstreetmap.org/search'
         + '?format=jsonv2&addressdetails=1&limit=6&accept-language=it'
+        + '&countrycodes=it' // <-- AGGIUNTO: Limita la ricerca al territorio italiano
         + '&q=' + encodeURIComponent(q);
 
     try {
@@ -306,13 +364,20 @@ if (!SpeechRec) {
     };
 
     recognition.onresult = (e) => {
-        let interim = '';
-        for (let i = e.resultIndex; i < e.results.length; i++) {
+        let finalTranscript = '';
+        let interimTranscript = '';
+
+        // Ripartiamo sempre da 0 invece che da e.resultIndex per evitare duplicazioni
+        for (let i = 0; i < e.results.length; i++) {
             const text = e.results[i][0].transcript;
-            if (e.results[i].isFinal) recFinal += text + ' ';
-            else interim += text;
+            if (e.results[i].isFinal) {
+                finalTranscript += text + ' ';
+            } else {
+                interimTranscript += text;
+            }
         }
-        descInput.value = (recBase + recFinal + interim).replace(/\s+/g, ' ');
+        // Uniamo il testo che era già presente prima di cliccare "mic" con i nuovi risultati
+        descInput.value = (recBase + finalTranscript + interimTranscript).replace(/\s+/g, ' ');
     };
 
     recognition.onerror = (e) => {

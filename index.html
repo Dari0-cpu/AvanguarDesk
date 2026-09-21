@@ -50,7 +50,7 @@
 <div id="addModal" class="modal-overlay">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModals()">×</button>
-        <h2 class="modal-title">Nuovo Cliente</h2>
+        <h2 class="modal-title" id="formModalTitle">Nuovo Cliente</h2>
         <form id="addForm" autocomplete="off">
             <div class="form-group"><input type="text" id="i_nome" placeholder="Nome" required></div>
             <div class="form-group"><input type="text" id="i_cognome" placeholder="Cognome (opzionale)"></div>
@@ -72,13 +72,23 @@
 
 <!-- Modal Dettaglio Cliente -->
 <div id="detailModal" class="modal-overlay">
-    <div class="modal-content">
+    <!-- Aggiunto padding-bottom per fare spazio al bottone -->
+    <div class="modal-content" style="padding-bottom: 60px;">
         <button class="modal-close" onclick="closeModals()">×</button>
+
+        <!-- QUI DEVE ESSERCI SOLO QUESTO TITOLO -->
         <h2 class="modal-title" id="d_nome">Nome</h2>
+
         <div class="detail-row"><span class="detail-label">Location:</span> <p class="detail-value" id="d_location"></p></div>
         <div class="detail-row"><span class="detail-label">Telefono:</span> <p class="detail-value" id="d_telefono"></p></div>
         <div class="detail-row"><span class="detail-label">Mail:</span> <p class="detail-value" id="d_mail"></p></div>
         <div class="detail-row"><span class="detail-label">Problema:</span> <p class="detail-value" id="d_descrizione"></p></div>
+
+        <!-- NUOVO CONTENITORE PULSANTI -->
+        <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between;">
+            <button id="btnEditClient" class="btn-submit" style="width: auto; padding: 8px 15px; font-size: 0.95rem; margin-top: 0;">✏️ Modifica</button>
+            <button id="btnDeleteActive" class="delete-active-btn" title="Elimina definitivamente">🗑️ Elimina</button>
+        </div>
     </div>
 </div>
 
