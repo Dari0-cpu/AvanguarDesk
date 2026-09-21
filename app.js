@@ -353,31 +353,32 @@ if (!SpeechRec) {
     recognition = new SpeechRec();
     recognition.lang = 'it-IT';
     recognition.continuous = true;
-    recognition.interimResults = true;
+
+    // LA SOLUZIONE AL BUG ANDROID: spegniamo i risultati in tempo reale
+    recognition.interimResults = false;
 
     recognition.onstart = () => {
         recording = true;
         recBase = descInput.value ? descInput.value.trim() + ' ' : '';
-        recFinal = '';
         micBtn.classList.add('recording');
-        micHint.textContent = '🔴 In ascolto... premi di nuovo il microfono per fermare.';
+        micHint.textContent = '🔴 Parla ora... (il testo apparirà pulito ad ogni tua pausa)';
     };
 
     recognition.onresult = (e) => {
-        let finalTranscript = '';
-        let interimTranscript = '';
-
-        // Ripartiamo sempre da 0 invece che da e.resultIndex per evitare duplicazioni
-        for (let i = 0; i < e.results.length; i++) {
-            const text = e.results[i][0].transcript;
+        let newText = '';
+        // Prendiamo SOLO i risultati definitivi
+        for (let i = e.resultIndex; i < e.results.length; i++) {
             if (e.results[i].isFinal) {
-                finalTranscript += text + ' ';
-            } else {
-                interimTranscript += text;
+                newText += e.results[i][0].transcript + ' ';
             }
         }
-        // Uniamo il testo che era già presente prima di cliccare "mic" con i nuovi risultati
-        descInput.value = (recBase + finalTranscript + interimTranscript).replace(/\s+/g, ' ');
+
+        if (newText) {
+            // Uniamo il testo precedente con la nuova frase
+            descInput.value = (recBase + newText).replace(/\s+/g, ' ');
+            // Aggiorniamo la base nel caso tu continui a parlare
+            recBase = descInput.value + ' ';
+        }
     };
 
     recognition.onerror = (e) => {
@@ -399,7 +400,7 @@ if (!SpeechRec) {
         try {
             recognition.start();
         } catch (err) {
-            micHint.textContent = '⚠️ Dettatura non avviabile. Serve una pagina https:// o localhost.';
+            micHint.textContent = '⚠️ Dettatura non avviabile.';
         }
     };
 }
